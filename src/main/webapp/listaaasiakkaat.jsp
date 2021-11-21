@@ -10,7 +10,12 @@
 </head>
 <body>
 <table id="listaus">
-	<thead>				
+	<thead>		
+	<tr>
+	<th>Hakusana:</th>
+	<th colspan="2"><input type="text" id="hakusana"></th>
+	<th><input type="button" value="hae" id="hakunappi"></th>
+	</tr>		
 		<tr>
 			<th>Etunimi</th>
 			<th>Sukunimi</th>
@@ -24,6 +29,21 @@
 <script>
 
 $(document).ready(function(){
+
+	haeAsiakkaat();
+	 $("#hakunappi".click(function(){
+		 haeAsiakkaat(); 
+});
+		$(document.body).on("keydown", function(event){
+			  if(event.which==13){
+				  haeAsiakkaat();
+			  }
+			  });
+	 $("#hakusana").focus();
+ });
+	
+function haeAsiakkaat(){	 
+	$("#listaus tbody").empty();
 $.ajax({url:"asiakkaat", type:"GET", dataType:"json", success:function(result){
 
 $.each(result.asiakkaat, function(i, field){  
@@ -37,7 +57,8 @@ $.each(result.asiakkaat, function(i, field){
         	$("#listaus tbody").append(htmlStr);
         });	
     }});
-});	
+    
+}
 </script>
 </body>
 </html>
